@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 
 import { movie } from "./movie";
+import { search } from "./search";
 import { tvShow } from "./tv-show";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   movie,
+  search,
   tvShow
 });
 

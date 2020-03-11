@@ -4,6 +4,7 @@ import {
   GET_TV_SHOW_DETAILS_SUCCESS,
   GET_TV_SHOW_DETAILS_FAILURE,
   GET_TV_SHOWS_LIST,
+  GET_TV_SHOWS_LIST_LOADING,
   GET_TV_SHOWS_LIST_SUCCESS,
   GET_TV_SHOWS_LIST_FAILURE
 } from "../types";
@@ -11,6 +12,7 @@ import ApiList from "../../models/api-list.model";
 import ApiErrorModel from "../../models/api-error.model";
 import TvShowDetails from "../../models/tv-show-details.model";
 import TvShowListResult from "../../models/tv-show-list-result.model";
+import VideoResult from "../../models/video-result.model";
 
 export const getTvShowDetailsAction = (id: string): TvShowActionTypes => ({
   type: GET_TV_SHOW_DETAILS,
@@ -20,11 +22,13 @@ export const getTvShowDetailsAction = (id: string): TvShowActionTypes => ({
 });
 
 export const getTvShowDetailsActionSuccess = (
-  data: TvShowDetails
+  data: TvShowDetails,
+  video?: VideoResult
 ): TvShowActionTypes => ({
   type: GET_TV_SHOW_DETAILS_SUCCESS,
   payload: {
-    data
+    data,
+    video
   }
 });
 
@@ -37,8 +41,20 @@ export const getTvShowDetailsActionFailure = (
   }
 });
 
-export const getTvShowListAction = (): TvShowActionTypes => ({
-  type: GET_TV_SHOWS_LIST
+export const getTvShowListAction = (page: number = 1): TvShowActionTypes => ({
+  type: GET_TV_SHOWS_LIST,
+  payload: {
+    page
+  }
+});
+
+export const getTvShowListLoadingAction = (
+  page: number = 1
+): TvShowActionTypes => ({
+  type: GET_TV_SHOWS_LIST_LOADING,
+  payload: {
+    page
+  }
 });
 
 export const getTvShowListActionSuccess = (

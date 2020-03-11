@@ -1,16 +1,38 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import React from "react";
-import Home from "./pages/Home";
-import MovieDetails from "./pages/MovieDetails";
-import TvShowDetails from "./pages/TvShowDetails";
+import React, { Suspense } from "react";
+import Loader from "./components/Loader";
+const Home = React.lazy(() => import("./pages/Home"));
+const MovieDetails = React.lazy(() => import("./pages/MovieDetails"));
+const TvShowDetails = React.lazy(() => import("./pages/TvShowDetails"));
 
 const AppRouter: React.FC = () => (
   <Router>
     <Switch>
-      <Route path="/movie/:id" component={MovieDetails} />
-      <Route path="/tv-show/:id" component={TvShowDetails} />
-      <Route path="/" component={Home} />
+      <Route
+        path="/movies/:id"
+        render={props => (
+          <Suspense fallback={<Loader />}>
+            <MovieDetails {...props} />
+          </Suspense>
+        )}
+      />
+      <Route
+        path="/tv-shows/:id"
+        render={props => (
+          <Suspense fallback={<Loader />}>
+            <TvShowDetails {...props} />
+          </Suspense>
+        )}
+      />
+      <Route
+        path="/"
+        render={props => (
+          <Suspense fallback={<Loader />}>
+            <Home {...props} />
+          </Suspense>
+        )}
+      />
     </Switch>
   </Router>
 );

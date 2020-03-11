@@ -1,4 +1,17 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+// Application Wrapper CSS
+export const AppWrapper = styled.div`
+  width: 80vw;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  @media (max-width: 1024px) {
+    width: 100vw;
+  }
+`;
 
 // Reset CSS
 export default createGlobalStyle`
@@ -25,14 +38,14 @@ export default createGlobalStyle`
   }
   body {
     font-size: 2rem;
+    line-height: 100%;
+    background-color: #e9ebee;
+    color: #1d2129;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section {
     display: block;
-  }
-  body {
-    line-height: 1;
   }
   ol, ul {
     list-style: none;
@@ -56,5 +69,6 @@ export default createGlobalStyle`
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
   }
 `;

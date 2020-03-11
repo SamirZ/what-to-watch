@@ -4,6 +4,7 @@ import {
   GET_MOVIE_DETAILS_SUCCESS,
   GET_MOVIE_DETAILS_FAILURE,
   GET_MOVIES_LIST,
+  GET_MOVIES_LIST_LOADING,
   GET_MOVIES_LIST_SUCCESS,
   GET_MOVIES_LIST_FAILURE
 } from "../types";
@@ -11,6 +12,7 @@ import ApiList from "../../models/api-list.model";
 import ApiErrorModel from "../../models/api-error.model";
 import MovieDetails from "../../models/move-details.model.ts";
 import MovieListResult from "../../models/movie-list-result.model";
+import VideoResult from "../../models/video-result.model";
 
 export const getMovieDetailsAction = (id: string): MovieActionTypes => ({
   type: GET_MOVIE_DETAILS,
@@ -20,11 +22,13 @@ export const getMovieDetailsAction = (id: string): MovieActionTypes => ({
 });
 
 export const getMovieDetailsActionSuccess = (
-  data: MovieDetails
+  data: MovieDetails,
+  video?: VideoResult
 ): MovieActionTypes => ({
   type: GET_MOVIE_DETAILS_SUCCESS,
   payload: {
-    data
+    data,
+    video
   }
 });
 
@@ -37,8 +41,20 @@ export const getMovieDetailsActionFailure = (
   }
 });
 
-export const getMoviesListAction = (): MovieActionTypes => ({
-  type: GET_MOVIES_LIST
+export const getMoviesListAction = (page: number = 1): MovieActionTypes => ({
+  type: GET_MOVIES_LIST,
+  payload: {
+    page
+  }
+});
+
+export const getMoviesListLoadingAction = (
+  page: number = 1
+): MovieActionTypes => ({
+  type: GET_MOVIES_LIST_LOADING,
+  payload: {
+    page
+  }
 });
 
 export const getMoviesListActionSuccess = (

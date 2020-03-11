@@ -11,23 +11,26 @@ import ApiList from "../../models/api-list.model";
 import ApiErrorModel from "../../models/api-error.model";
 import TvShowDetails from "../../models/tv-show-details.model";
 import TvShowListResult from "../../models/tv-show-list-result.model";
+import VideoResult from "../../models/video-result.model";
 
 export interface TvShowDetailsState {
   isLoading: boolean;
   tvShowDetails?: TvShowDetails;
   tvShowList: ApiList<TvShowListResult>;
   error?: ApiErrorModel;
+  video?: VideoResult;
 }
 
 const initialState: TvShowDetailsState = {
   isLoading: false,
   tvShowDetails: undefined,
   tvShowList: {
-    page: 0,
+    page: 1,
     results: [],
     total_pages: 0,
     total_results: 0
   },
+  video: undefined,
   error: undefined
 };
 
@@ -39,24 +42,22 @@ export const tvShow = (
     case GET_TV_SHOW_DETAILS:
       return {
         ...state,
+        video: undefined,
+        isLoading: true
+      };
+    case GET_TV_SHOWS_LIST:
+      return {
+        ...state,
+        video: undefined,
+        tvShowDetails: undefined,
         isLoading: true
       };
     case GET_TV_SHOW_DETAILS_SUCCESS:
       return {
         ...state,
         tvShowDetails: action.payload.data,
+        video: action.payload.video,
         isLoading: false
-      };
-    case GET_TV_SHOW_DETAILS_FAILURE:
-      return {
-        ...state,
-        error: action.payload.error,
-        isLoading: false
-      };
-    case GET_TV_SHOWS_LIST:
-      return {
-        ...state,
-        isLoading: true
       };
     case GET_TV_SHOWS_LIST_SUCCESS:
       return {
@@ -64,6 +65,7 @@ export const tvShow = (
         tvShowList: action.payload.data,
         isLoading: false
       };
+    case GET_TV_SHOW_DETAILS_FAILURE:
     case GET_TV_SHOWS_LIST_FAILURE:
       return {
         ...state,
